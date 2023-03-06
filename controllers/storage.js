@@ -1,4 +1,6 @@
 const {storageModel} = require('../models') //En este controlador llamo los modelos del index.js de la carpeta Models 
+const PUBLIC_URL= process.env.PUBLIC_URL;
+
 
 //Estas funciones van a recibir todas las cosas que envia express. los argumentos de request y response. 
 //Metodo de obtener la lista de la base de datos
@@ -9,6 +11,7 @@ const getItems = async (req, res) => { //async y await ayuda a esperar a que ret
 }; 
 
 
+
 //Metodo de obtener un detalle  
 const getItem = (req, res) => {};
 
@@ -17,10 +20,11 @@ const createItem = async (req, res) => {
     const { body, file } = req //{body} de coloca en llaves cuando la constante se llamma igual que la propieda que se quiere hacer (req.body)
     console.log(file)
     const fileData = {
-        filename: file.filename
+        filename: file.filename,
+        url:`${PUBLIC_URL}/${file.filename}`
     }
-    const data = await storageModel.create(body)
-    res.send({file}) //Los controladores siempre deben retornar algo o sino se qudan alli pegados 
+    const data = await storageModel.create(fileData)
+    res.send({data}) //Los controladores siempre deben retornar algo o sino se qudan alli pegados 
 };
 
 

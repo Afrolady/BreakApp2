@@ -5,7 +5,7 @@ const {createItem} = require("../controllers/storage");
 
 
 
-router.post("/", uploadMiddleare.single("myfile"), createItem); //myfile es el nombre del archivo en postman
+router.post("/", uploadMiddleware.single("myfile"), createItem); //myfile es el nombre del archivo en postman
    
 
 module.exports = router;

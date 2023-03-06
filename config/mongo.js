@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const dbConnect = () => {
+    mongoose.set('strictQuery', true);
     const DB_URI= process.env.DB_URI;
     mongoose.connect(
         DB_URI, 
@@ -14,8 +15,7 @@ const dbConnect = () => {
         }else{
             console.log('**** ERROR DE CONEXION ****')
         }
-    }
-    
+    }   
  );
 
 };
