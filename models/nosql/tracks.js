@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const mongooseDelete = require("mongoose-delete");
 const TracksScheme = new mongoose.Schema(
     {
         name:{
@@ -45,6 +45,9 @@ const TracksScheme = new mongoose.Schema(
         timestamps:true,
     }
 );
+
+TracksScheme.plugin(mongooseDelete, { overrideMethods: "all" }); //Sobreescribe los metodos nativos de mongoose con el softdelete de Studio 3T  
+
 
 module.exports = mongoose.model("tracks", TracksScheme);
 

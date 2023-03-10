@@ -15,7 +15,18 @@ const getItems = async (req, res) => { //async y await ayuda a esperar a que ret
 
 
 //Metodo de obtener un detalle
-const getItem = (req, res) => {};
+const getItem = async (req, res) => {
+    try{
+        req = matchedData(req); //El request es igual a lo que devuelve el matchedData del request para filtar el id. 
+        const {id} = req; // se le pasa el id que se obtiene ya filtrado y limpio desde la validacion. 
+        const data = await tracksModel.findById(id); //esta constante data me busca todo lo que esta alla. 
+        res.send({data});
+    }catch(e){
+        handleHttpError(res, "ERROR_GET_ITEMS");
+    } 
+
+
+};
 
 //Metodo de insertar un registro
 const createItem = async (req, res) => {
@@ -26,7 +37,6 @@ const createItem = async (req, res) => {
         res.send({data});
     }catch(e) {
         handleHttpError(res, "ERROR_CREATE_ITEMS");
-
     }
 
 
@@ -37,11 +47,30 @@ const createItem = async (req, res) => {
 
 
 //Metodo de actualizar un registro
-const updateItem = (req, res) => {};
+const updateItem = async (req, res) => {
+    try{
+        const {id, ...body} = matchedData(req); //De un objeto, se crean dos objetos
+        const data = await tracksModel.findOneAndUpdate(
+            id, body
+        );
+        res.send({data});
+    }catch(e) {
+        handleHttpError(res, "ERROR_UPDATE_ITEMS");
+    }
+};
 
 
 //Metodo de eliminar un registro
-const deleteItem = (req, res) => {};
+const deleteItem = async (req, res) => {
+    try{
+        req = matchedData(req); 
+        const {id} = req;  
+        const data = await tracksModel.delete({_id:id});
+        res.send({data});
+    }catch(e){
+        handleHttpError(res, "ERROR_DELETE_ITEMS");
+    } 
+};
 
 
 
