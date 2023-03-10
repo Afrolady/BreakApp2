@@ -1,11 +1,16 @@
-const {tracksModel} = require('../models') //En este controlador llamo los modelos del index.js de la carpeta Models 
+const { matchedData } = require("express-validator");
+const { tracksModel } = require('../models'); //En este controlador llamo los modelos del index.js de la carpeta Models 
+const { handleHttpError } = require("../utils/handleError"); 
 
 //Estas funciones van a recibir todas las cosas que envia express. los argumentos de request y response. 
 //Metodo de obtener la lista de la base de datos
 const getItems = async (req, res) => { //async y await ayuda a esperar a que retorne todo. 
-    const data = await tracksModel.find({}); //esta constante data me busca todo lo que esta alla. 
-
-    res.send({data});
+    try{
+        const data = await tracksModel.find({}); //esta constante data me busca todo lo que esta alla. 
+        res.send({data});
+    }catch(e) {
+        handleHttpError(res, "ERROR_GET_ITEMS");
+    }
 };
 
 
@@ -14,10 +19,19 @@ const getItem = (req, res) => {};
 
 //Metodo de insertar un registro
 const createItem = async (req, res) => {
-    const { body } = req //{body} se coloca en llaves cuando la constante se llamma igual que la propieda que se quiere hacer (req.body)
-    console.log(body)
-    const data = await tracksModel.create(body)
-    res.send({data}) //Los controladores siempre deben retornar algo o sino se quedan alli pegados 
+
+    try{
+        const body = req = matchedData(req)//para obtener los datos de una manera limpia y curada
+        const data = await tracksModel.create(body);
+        res.send({data});
+    }catch(e) {
+        handleHttpError(res, "ERROR_CREATE_ITEMS");
+
+    }
+
+
+
+    
 };
 
 
@@ -33,4 +47,3 @@ const deleteItem = (req, res) => {};
 
 module.exports = {getItems, getItem, createItem, updateItem, deleteItem};
 
-//hhhhhhhh
