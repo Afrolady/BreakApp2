@@ -26,4 +26,4 @@ const validatorGetItem = [
 
 
  
-module.exports = {validatorCreateItem, validatorGetItem}
+module.exports = {validatorCreateItem, validatorGetItem};

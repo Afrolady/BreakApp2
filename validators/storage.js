@@ -12,4 +12,4 @@ const validatorGetItem = [
 
  
  
-module.exports = { validatorGetItem}
+module.exports = { validatorGetItem};
