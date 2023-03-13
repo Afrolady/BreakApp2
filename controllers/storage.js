@@ -13,7 +13,7 @@ const getItems = async (req, res) => { //async y await ayuda a esperar a que ret
     try{
         const data = await storageModel.find({}); //esta constante data me busca todo lo que esta alla. 
         res.send({data});
-    }catch(e){
+    }catch(e){ 
         handleHttpError(res, "ERROR_LIST_ITEMS");
     }
 }; 
@@ -33,6 +33,7 @@ const getItem = async (req, res) => {
 
 //Metodo de insertar un registro  
 const createItem = async (req, res) => {
+    try {
     const { file } = req //{file} de coloca en llaves cuando la constante se llamma igual que la propieda que se quiere hacer (req.body)
     const fileData = {
         filename: file.filename,
@@ -40,12 +41,13 @@ const createItem = async (req, res) => {
     }
     const data = await storageModel.create(fileData)
     res.send({data}) //Los controladores siempre deben retornar algo o sino se qudan alli pegados 
+  
+    } catch (e) {
+        handleHttpError(res, "ERROR_CREAR_ITEM");        
+    }
 };
 
 
-
-//Metodo de actualizar un registro
-const updateItem = async (req, res) => {};
 
 
 //Metodo de eliminar un registro 
@@ -53,16 +55,17 @@ const deleteItem = async (req, res) => {
     try{
         const { id } = matchedData(req)
         const dataFile = await storageModel.findById(id); //esta constante data me busca todo lo que esta alla. 
+        await storageModel.deleteOne(id)
         const  {filename} = data;
-        const filepath =  `${MEDIA_PATH}/${filename}`; //TODO c:/miproyecto/file-1234.png (ruta absoluta)
+        const filepath =  (`${MEDIA_PATH}/${filename}`); //TODO c:/miproyecto/file-1234.png (ruta absoluta)
         
         fs.unlinkSync(filepath); //Elimina lo que hay en ese registro
         const data =  
-        filepath,
+        filePath
         deleted:1 //Respuesta:  Este archivo ha sido eliminado correctamente . 
-        
+    };
         res.send({data});
-    }catch(e){
+    } catch(e){
         handleHttpError(res, "ERROR_DETAIL_ITEMS");
     }
     
@@ -70,4 +73,4 @@ const deleteItem = async (req, res) => {
 
 
 
-module.exports = {getItems, getItem, createItem, updateItem, deleteItem};
+module.exports = {getItems, getItem, createItem, deleteItem};

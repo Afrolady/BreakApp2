@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const uploadMiddleware = require("../utils/handleStorage");
 const {validatorGetItem} = require("../validators/storage"); 
-const {getItems, getItem, updateItem, deleteItem, createItem} = require("../controllers/storage");
+const {getItems, getItem, deleteItem, createItem} = require("../controllers/storage");
 
 
 
