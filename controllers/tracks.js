@@ -6,8 +6,9 @@ const { handleHttpError } = require("../utils/handleError");
 //Metodo de obtener la lista de la base de datos
 const getItems = async (req, res) => { //async y await ayuda a esperar a que retorne todo. 
     try{
+        const user = req.user;
         const data = await tracksModel.find({}); //esta constante data me busca todo lo que esta alla. 
-        res.send({data});
+        res.send({data, user});
     }catch(e) {
         handleHttpError(res, "ERROR_GET_ITEMS");
     }

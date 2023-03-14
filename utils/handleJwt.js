@@ -19,13 +19,14 @@ return sign
 }
 
 //pasar el token de session el JWT. verificar la firma
-const verifyToken = async (tokenJwt) => {} //verificar Token  
-try {
-    return jwt.verify(tokenJwt, JWT_SECRET)
-} catch (e) {
-    return null;
-    
-}
+const verifyToken = async (tokenJwt) => { //verificar Token  
+    try {
+        return jwt.verify(tokenJwt, JWT_SECRET)
+    } catch (e) {
+        return null;
+        
+    }
 
+};
 
  module.exports = {tokenSign, verifyToken};
