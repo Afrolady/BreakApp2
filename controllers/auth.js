@@ -23,6 +23,7 @@ const registerCtrl = async (req, res) => {
     handleHttpError(res, "ERROR_REGISTER_USER");
 };
 
+}
 //Controlador encargado de logear un usuario. 
 const loginCtrl = async (req, res) => {
     try {
@@ -53,4 +54,4 @@ const loginCtrl = async (req, res) => {
 }
 
 
-module.exports = {registerCtrl, loginCtrl}; 
+module.exports = {registerCtrl, loginCtrl};

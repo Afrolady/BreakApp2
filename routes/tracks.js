@@ -1,4 +1,4 @@
-const express = require("express") //express es el proveedor del servicio WEB
+const express = require("express"); //express es el proveedor del servicio WEB
 const router = express.Router(); //manejador de las rutas 
 const authMiddleware = require("../middleware/session");
 const checkRole = require("../middleware/rol");
@@ -10,14 +10,19 @@ const { getItems, getItem, createItem, updateItem, deleteItem } = require("../co
 //TODO http://localhost/tracks GET, POST, DELETE, PUT. CRUD
 
 //Ruta de listar Item 
-router.get("/", authMiddleware ,getItems);
+//router.get("/", authMiddleware ,getItems);
+
+router.get("/", getItems);
 
 //Ruta de obtener un detalle de Item 
 router.get("/:id", authMiddleware, validatorGetItem, getItem);
 
 
 //Ruta de crear un registro 
-router.post("/", authMiddleware, checkRole("admin"), validatorCreateItem, createItem); //validacion que se hace al crear un nuevo registro.      
+//router.post("/", authMiddleware, checkRole("admin"), validatorCreateItem, createItem); //validacion que se hace al crear un nuevo registro.      
+//checkRole("admin", "user", "manager")
+
+router.post("/", validatorCreateItem, createItem); //validacion que se hace al crear un nuevo registro.      
 //checkRole("admin", "user", "manager")
 
 //Ruta de actualizar un registro 

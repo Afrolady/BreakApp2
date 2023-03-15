@@ -1,15 +1,15 @@
 const { matchedData } = require("express-validator");
-const { tracksModel } = require('../models'); //En este controlador llamo los modelos del index.js de la carpeta Models 
+const { tracksModel } = require("../models"); //En este controlador llamo los modelos del index.js de la carpeta Models 
 const { handleHttpError } = require("../utils/handleError"); 
 
 //Estas funciones van a recibir todas las cosas que envia express. los argumentos de request y response. 
 //Metodo de obtener la lista de la base de datos
-const getItems = async (req, res) => { //async y await ayuda a esperar a que retorne todo. 
+const getItems = async (req, res) => { //async y await ayuda a esperar a que retorne todo. async, asincrona que devuelve una promesa cuando termine lo que esta haciendo.
     try{
-        const user = req.user;
-        const data = await tracksModel.find({}); //esta constante data me busca todo lo que esta alla. 
-        res.send({data, user});
-    }catch(e) {
+        const data = await tracksModel.find(); //esta constante data me busca todo lo que esta alla. //await espera a resolver antes de ejercutar la siguiente linea #11
+        res.send(data);
+         
+    }catch(e) {        
         handleHttpError(res, "ERROR_GET_ITEMS");
     }
 };
@@ -33,16 +33,13 @@ const getItem = async (req, res) => {
 const createItem = async (req, res) => {
 
     try{
-        const body = req = matchedData(req)//para obtener los datos de una manera limpia y curada
-        const data = await tracksModel.create(body);
+        req = matchedData(req);//para obtener los datos de una manera limpia y curada
+        const data = await tracksModel.create(req);
+        console.log(data)
         res.send({data});
     }catch(e) {
         handleHttpError(res, "ERROR_CREATE_ITEMS");
     }
-
-
-
-    
 };
 
 

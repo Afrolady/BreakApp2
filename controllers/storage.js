@@ -1,7 +1,7 @@
 const fs = require("fs");// file system 
 const { matchedData } = require("express-validator");
 const {storageModel} = require("../models"); //En este controlador llamo los modelos del index.js de la carpeta Models 
-const {handleHttpError} = require("../utils/handleHttpError"); 
+const {handleHttpError} = require("../utils/handleError"); 
 
 const PUBLIC_URL= process.env.PUBLIC_URL;
 const MEDIA_PATH= `${__dirname}/../storage`; //ruta absoluta del archivo en el disco local, mis documento, . png. mp4  que esta guardada en el folder storage 
@@ -63,7 +63,7 @@ const deleteItem = async (req, res) => {
         const data =  
         filePath
         deleted:1 //Respuesta:  Este archivo ha sido eliminado correctamente . 
-    };
+    
         res.send({data});
     } catch(e){
         handleHttpError(res, "ERROR_DETAIL_ITEMS");
@@ -74,3 +74,5 @@ const deleteItem = async (req, res) => {
 
 
 module.exports = {getItems, getItem, createItem, deleteItem};
+
+

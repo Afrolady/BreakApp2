@@ -13,14 +13,14 @@ const validatorCreateItem = [
     check("duration.start").exists().notEmpty(),
     check("duration.end").exists().notEmpty(),
     (req, res, next) => {
-        return validateResult(req, res, next);
+        return validateResults(req, res, next);
     },
 ];
 
 const validatorGetItem = [
     check("id").exists().notEmpty().isMongoId(), //Un parametro tipo Id que exista y no este vacio y cumpla con un formato de mongoId. 
     (req, res, next) => {
-        return validateResult(req, res, next);
+        return validateResults(req, res, next);
     },
 ];
 
